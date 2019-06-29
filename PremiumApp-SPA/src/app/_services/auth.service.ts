@@ -22,6 +22,18 @@ export class AuthService {
   }
 
   calculate(model: any) {
+    return this.http.post(this.baseUrl + 'calculate', model).pipe(
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          console.log('hello');
+        }
+      })
+    );
+  }
+   /*
+  calculate(model: any) {
     return this.http.post(this.baseUrl + 'calculate', model);
   }
+  */
 }

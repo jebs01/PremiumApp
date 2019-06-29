@@ -25,12 +25,11 @@ namespace PremiumApp.API.Controllers
         }
 
         [HttpPost("calculate")]
-        public async Task<string> Calculate(UserForCalculationDto userForCalculationDto)
+        public async Task<IActionResult> Calculate(UserForCalculationDto userForCalculationDto)
         {
-            var  i =  _repo.Calculate(userForCalculationDto.Name, 
-                                         userForCalculationDto.Age);
-            //return StatusCode(200);
-            return Convert.ToString(i);
+            userForCalculationDto.Premium =  _repo.Calculate(userForCalculationDto);
+            return StatusCode(200,userForCalculationDto);
+           // return Convert.ToString(i);
         }
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using PremiumApp.API.Models;
 using Microsoft.EntityFrameworkCore;
+using PremiumApp.API.Data;
+using PremiumApp.API.Dtos;
 
 namespace PremiumApp.API.Data
 {
@@ -15,34 +17,28 @@ namespace PremiumApp.API.Data
        
 
 
-        public double Calculate(string name, string age)
-        {
-           
+        public double Calculate(UserForCalculationDto userForCalculationDto)
+        {  
+                DateTime dt1 = Convert.ToDateTime(userForCalculationDto.DateofBirth);
+                TimeSpan ts = DateTime.Today - dt1;
 
+                   int iAge = Convert.ToInt32((ts.Days) / 365);
+                   string strOccupation =userForCalculationDto.Occupation ;
+                      
+                      // TODO : Move to Enum to avoid magic strings
+                   double iRiskFactor = 1;
+                   if (strOccupation == "Light Manual")
+                   iRiskFactor = 1.75;
+                    if (strOccupation == "Heavy Manual")
+                   iRiskFactor = 1.5;
+                    if (strOccupation == "White Collar")
+                   iRiskFactor = 1.25;
+                    if (strOccupation == "Professional")
+                   iRiskFactor = 1;
 
-
-            // DateTime dt1 = Convert.ToDateTime(user.DateofBirth);
-                    //  Convert.ToDateTime(txtDOB.Text, "dd/MM/yyyy");
-                    //DateTime.Parse(txtDOB.Text, "dd/MM/yyyy");
-
-                   // Convert.ToDateTime(txtDOB.Text);
-                    // DateTime dt2 = Convert.ToDateTime(txtDOB.Text)
-
-                    //TimeSpan ts = DateTime.Today - dt1;
-
-                   // txtAge.Text = Convert.ToString((ts.Days) / 365);
-
-
-                    //Response.Write("Hello");
-                    //int i = Request.Form["txtAge"].
-
-                    //string n = String.Format("{0}", Request.Form["txtAge"]);
-                   // int iAge = Convert.ToInt32(user.Age);
-                   // double iCoverAmount = Convert.ToDouble(user.SumInsured);
-                    //double iRiskFactor = Convert.ToDouble(user.Occupation);
-                    //double iPremium = (iCoverAmount * iRiskFactor * iAge) / 1000 * 12;
-
-                    return  800;
+                   double iSumInsured = Convert.ToInt64(userForCalculationDto.SumInsured);
+                    return  (iSumInsured * iRiskFactor * iAge) / 1000 * 12;;
+                    //return 1200;
         }
 
 

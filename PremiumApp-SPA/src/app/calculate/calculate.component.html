@@ -1,15 +1,52 @@
 <form #registerForm="ngForm" (ngSubmit)="calculate()">
-  <h2 class="text-center text-primary">Sign Up</h2>
+  <h2 class="text-center text-primary">Calculator</h2>
   <hr>
 
   <div class="form-group">
-    <input type="text" class="form-control" required name="name" [(ngModel)]="model.name" placeholder="Username">
+    <input type="text" class="form-control" 
+    required name="name" [(ngModel)]="model.name" 
+    placeholder="Name">
   </div>
 
   <div class="form-group">
-    <input type="age" class="form-control" required name="age" [(ngModel)]="model.age" placeholder="Password">
+    <input type="text" class="form-control" 
+    required name="age" [(ngModel)]="model.age" 
+    placeholder="Age">
+  </div>
+  
+  <div class="form-group">
+    <input type="date" class="form-control"
+     required name="DateofBirth" [(ngModel)]="model.DateofBirth" 
+     placeholder="DateofBirth">
   </div>
 
+  <div class="form-group">
+    <input type="dropdown" class="form-control"
+     required name="age" [(ngModel)]="model.age" 
+     placeholder="Age">
+  </div>
+  <div class="form-group">
+      
+      
+  <select (change)="calculate()" [(ngModel)]="model.Occupation" >
+    <option value="Light Manual">Cleaner</option>
+    <option value="Professional">Doctor</option>
+    <option value="White Collar">Author</option>
+    <option value="Heavy Manual">Farmer</option>
+    <option value="Heavy Manual">Mechanic</option>
+    <option value="Light Manual">Florist</option>
+</select>
+</div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" 
+    required name="SumInsured" [(ngModel)]="model.SumInsured" 
+    placeholder="SumInsured">
+  </div>
+
+  <div>Premium: {{model.Premium}}</div>
+  
+  
   <div class="form-group text-center">
     <button class="btn btn-success" type="submit">Calculate</button>
     <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>

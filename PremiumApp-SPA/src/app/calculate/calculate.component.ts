@@ -18,6 +18,7 @@ export class CalculateComponent implements OnInit {
   calculate() {
     this.authService.calculate(this.model).subscribe(() => {
       console.log('calculate successful');
+      
     }, error => {
       console.log(error);
     });

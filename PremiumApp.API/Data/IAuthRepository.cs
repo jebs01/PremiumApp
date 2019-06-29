@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using PremiumApp.API.Models;
+using PremiumApp.API.Data;
+using PremiumApp.API.Dtos;
 
 namespace PremiumApp.API.Data
 {
     public interface IAuthRepository
     {
-         double Calculate(string name, string age);
+         double Calculate(UserForCalculationDto userForCalculationDto);
     }
 }
