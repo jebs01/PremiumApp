@@ -66,6 +66,9 @@ export class CalculateComponent implements OnInit {
     var birthDate = new Date(this.model.dateofBirth);
     let timeDiff = Math.abs(Date.now() - birthDate.getTime());
     let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
+    if (isNaN(age))
+     age = 0;
+
     console.log('age');
     this.model.age = age;
   }

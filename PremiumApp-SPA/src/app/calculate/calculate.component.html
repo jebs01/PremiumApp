@@ -1,49 +1,67 @@
-<form #registerForm="ngForm" name="PremiumForm" >
+<!--<form #registerForm="ngForm" name="PremiumForm" (ngSubmit)="calculate()"> -->
+    <form novalidate (ngSubmit)="calculate()" #f="ngForm" name="PremiumForm">
+    
   <h2 class="text-center text-primary">Calculator</h2>
   <hr>
 
+  * All fields below are mandatory. <br>
+
   <div class="form-group">
-    <label>Name :<br> </label>
-    <input type="text" class="form-control" 
-    required minlength="4" name="name" [(ngModel)]="model.name" 
-    placeholder="Name"> 
+    <label>Name* :<br> </label>
+    <input id="Name" required type="text" class="form-control" 
+     minlength="4" name="name" [(ngModel)]="model.name" 
+    placeholder="Name" #fullNameControl="ngModel"> 
+    <span style="color:red"
+    *ngIf="fullNameControl.invalid && fullNameControl.touched">
+      Name should have atleast 4 characters.
+    </span>
+      
     
   </div>
-
-
+  
+  
 
  
   
   <div class="form-group">
-    <label>Date of Birth : <br></label>
-    <input type="text" class="form-control"
+    <label>Date of Birth* : <br></label>
+    <input id="DateofBirth" type="date" class="form-control"
      required name="DateofBirth" [(ngModel)]="model.dateofBirth" 
-     placeholder="DateofBirth" (blur)="calculateAge()">
+     placeholder="dd/mm/yyyy" #DOBControl="ngModel" (blur)="calculateAge()">
+     <span style="color:red"
+    *ngIf="DOBControl.invalid && DOBControl.touched">
+      Date of Birth is required
+    </span>
   </div>
 
   <div class="form-group">
-    <label>Age : <br></label>
+    <label>Age* : <br></label>
     <input type="text" class="form-control" 
     required name="age" [(ngModel)]="model.age" readonly="true" 
     placeholder="Age">
+    
   </div>
 
 <div>
-    <label>Occupation : <br></label>
-  <select required name="occupation" [(ngModel)]="model.occupation" 
+    <label>Occupation* : <br></label>
+  <select  required name="occupation" [(ngModel)]="model.occupation" 
     (change)="recalculate()">
     <option *ngFor="let occ of occupation" [value]="occ.name">
      {{occ.name}}
     </option>
-  </select>
+      </select>
   
 </div>
 
   <div class="form-group">
-      <label>Sum Insured A$:<br> </label>
-    <input type="text" class="form-control" 
+      <label>Sum Insured* A$:<br> </label>
+    <input id="SumInsured" type="text" class="form-control" 
     required name="SumInsured" [(ngModel)]="model.sumInsured" 
-    placeholder="SumInsured">
+    placeholder="SumInsured" #SumInsuredControl="ngModel">
+    <span style="color:red"
+    *ngIf="SumInsuredControl.invalid && SumInsuredControl.touched">
+      Sum Insured is required
+    </span>
   </div>
   
   <div *ngIf="!calculating">
@@ -52,7 +70,7 @@
   
   
   <div class="form-group text-center">
-    <button class="btn btn-success" type="button" (click)="calculate()">Calculate</button>
+    <button class="btn btn-success" type="button" (click)="calculate()" [disabled]="f.invalid" >Calculate</button>
     </div>
   
 </form>

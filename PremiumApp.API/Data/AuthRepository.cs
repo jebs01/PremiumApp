@@ -9,7 +9,7 @@ namespace PremiumApp.API.Data
 {
 
     // Set OccupationRating to avoid any issues with magic strings
-    // and for help clean code and maintainence
+    // and to help clean code and maintainence
 
     public static class OccupationRating
     {
