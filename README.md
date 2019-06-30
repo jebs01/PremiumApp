@@ -15,7 +15,7 @@ and shared below.
 
 https://drive.google.com/drive/folders/1HVM_rrhyEOshOj_XEF0gu_8C6Dq0iElZ?usp=sharing
 
-Kindly use the zip to review the code.
+In order to review & run the code, download the zip file from above and follow the below instructions.
 
 
 How to run the code.
