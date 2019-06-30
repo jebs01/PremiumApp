@@ -44,12 +44,16 @@
 
 <div>
     <label>Occupation* : <br></label>
-  <select  required name="occupation" [(ngModel)]="model.occupation" 
-    (change)="recalculate()">
+  <select  id="occupation" required name="occupation" [(ngModel)]="model.occupation" 
+    (change)="recalculate()" #OccControl="ngModel" required>
     <option *ngFor="let occ of occupation" [value]="occ.name">
      {{occ.name}}
     </option>
       </select>
+      <span style="color:red"
+      *ngIf="OccControl.invalid && OccControl.touched">
+        Occupation is required
+      </span>
   
 </div>
 
