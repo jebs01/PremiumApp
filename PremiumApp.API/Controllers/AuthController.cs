@@ -29,7 +29,7 @@ namespace PremiumApp.API.Controllers
         {
             userForCalculationDto.Premium =  _repo.Calculate(userForCalculationDto);
             return StatusCode(200,userForCalculationDto);
-           // return Convert.ToString(i);
+           
         }
     }
 }

@@ -7,6 +7,18 @@ using PremiumApp.API.Dtos;
 
 namespace PremiumApp.API.Data
 {
+
+    // Set OccupationRating to avoid any issues with magic strings
+    // and for help clean code and maintainence
+
+    public static class OccupationRating
+    {
+            public const double NotSet = 0;
+            public const double Professional = 1.0;
+            public const double WhiteCollar = 1.25;
+             public const double LightManual = 1.5;
+            public const double HeavyManual = 1.75;
+    }
     public class AuthRepository :IAuthRepository
     {
         private readonly DataContext _context;
@@ -14,31 +26,77 @@ namespace PremiumApp.API.Data
         {
             _context = context;
         }
-       
-
-
+          
         public double Calculate(UserForCalculationDto userForCalculationDto)
         {  
-                DateTime dt1 = Convert.ToDateTime(userForCalculationDto.DateofBirth);
-                TimeSpan ts = DateTime.Today - dt1;
+           
+                double iRiskFactor;
+                double iSumInsured;
 
-                   int iAge = Convert.ToInt32((ts.Days) / 365);
-                   string strOccupation =userForCalculationDto.Occupation ;
+           
+                DateTime dtDOB = Convert.ToDateTime(userForCalculationDto.DateofBirth);
+                TimeSpan tsAge = DateTime.Today - dtDOB;
+                int iAge = Convert.ToInt32((tsAge.Days) / 365);
+
+                string sSelectedOccupation =userForCalculationDto.Occupation ;
+                iSumInsured = Convert.ToInt64(userForCalculationDto.SumInsured);
                       
-                      // TODO : Move to Enum to avoid magic strings
-                   double iRiskFactor = 1;
-                   if (strOccupation == "Light Manual")
-                   iRiskFactor = 1.75;
-                    if (strOccupation == "Heavy Manual")
-                   iRiskFactor = 1.5;
-                    if (strOccupation == "White Collar")
-                   iRiskFactor = 1.25;
-                    if (strOccupation == "Professional")
-                   iRiskFactor = 1;
+                
+                  
+                 
+                switch (sSelectedOccupation)
+                   {
+                       /*
+                        Occupation selection options on screen:
 
-                   double iSumInsured = Convert.ToInt64(userForCalculationDto.SumInsured);
-                    return  (iSumInsured * iRiskFactor * iAge) / 1000 * 12;;
-                    //return 1200;
+                        1 => Select
+                        2 => Cleaner
+                        3 => Doctor
+                        4 => Author
+                        5 => Farmer
+                        6 => Mechanic
+                        7 => Florist
+
+                        */
+                       case "Select":
+                       iRiskFactor = OccupationRating.NotSet;
+                       break;
+
+                       case "Cleaner":
+                       iRiskFactor = OccupationRating.LightManual;
+                       break;
+                   
+                       case "Doctor":
+                       iRiskFactor = OccupationRating.Professional;
+                       break;
+                   
+                       case "Author":
+                       iRiskFactor = OccupationRating.WhiteCollar;
+                       break;
+                       
+                       case "Farmer":
+                       iRiskFactor = OccupationRating.HeavyManual;
+                       break;
+                       
+                       case "Mechanic":
+                       iRiskFactor = OccupationRating.HeavyManual;
+                       break;
+                       
+                       case "Florist":
+                       iRiskFactor = OccupationRating.LightManual;
+                       break;
+                      
+                       default:
+                       iRiskFactor = 1;
+                       break;
+                   }
+
+
+                  
+
+                  // Calculate and return Premium  value   
+                  return  (iSumInsured * iRiskFactor * iAge) / 1000 * 12;;
+                    
         }
 
 

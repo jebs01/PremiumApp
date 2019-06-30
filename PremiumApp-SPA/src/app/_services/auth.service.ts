@@ -25,8 +25,9 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'calculate', model).pipe(
       map((response: any) => {
         const user = response;
+       // response.
         if (user) {
-          console.log('hello');
+          return user;
         }
       })
     );

@@ -1,55 +1,58 @@
-<form #registerForm="ngForm" (ngSubmit)="calculate()">
+<form #registerForm="ngForm" name="PremiumForm" >
   <h2 class="text-center text-primary">Calculator</h2>
   <hr>
 
   <div class="form-group">
+    <label>Name :<br> </label>
     <input type="text" class="form-control" 
-    required name="name" [(ngModel)]="model.name" 
-    placeholder="Name">
+    required minlength="4" name="name" [(ngModel)]="model.name" 
+    placeholder="Name"> 
+    
   </div>
 
-  <div class="form-group">
-    <input type="text" class="form-control" 
-    required name="age" [(ngModel)]="model.age" 
-    placeholder="Age">
-  </div>
+
+
+ 
   
   <div class="form-group">
-    <input type="date" class="form-control"
-     required name="DateofBirth" [(ngModel)]="model.DateofBirth" 
-     placeholder="DateofBirth">
+    <label>Date of Birth : <br></label>
+    <input type="text" class="form-control"
+     required name="DateofBirth" [(ngModel)]="model.dateofBirth" 
+     placeholder="DateofBirth" (blur)="calculateAge()">
   </div>
 
   <div class="form-group">
-    <input type="dropdown" class="form-control"
-     required name="age" [(ngModel)]="model.age" 
-     placeholder="Age">
+    <label>Age : <br></label>
+    <input type="text" class="form-control" 
+    required name="age" [(ngModel)]="model.age" readonly="true" 
+    placeholder="Age">
   </div>
-  <div class="form-group">
-      
-      
-  <select (change)="calculate()" [(ngModel)]="model.Occupation" >
-    <option value="Light Manual">Cleaner</option>
-    <option value="Professional">Doctor</option>
-    <option value="White Collar">Author</option>
-    <option value="Heavy Manual">Farmer</option>
-    <option value="Heavy Manual">Mechanic</option>
-    <option value="Light Manual">Florist</option>
-</select>
+
+<div>
+    <label>Occupation : <br></label>
+  <select required name="occupation" [(ngModel)]="model.occupation" 
+    (change)="recalculate()">
+    <option *ngFor="let occ of occupation" [value]="occ.name">
+     {{occ.name}}
+    </option>
+  </select>
+  
 </div>
 
   <div class="form-group">
+      <label>Sum Insured A$:<br> </label>
     <input type="text" class="form-control" 
-    required name="SumInsured" [(ngModel)]="model.SumInsured" 
+    required name="SumInsured" [(ngModel)]="model.sumInsured" 
     placeholder="SumInsured">
   </div>
-
-  <div>Premium: {{model.Premium}}</div>
+  
+  <div *ngIf="!calculating">
+    Premium $: {{model.premium | currency:"AUD"}}
+  </div>
   
   
   <div class="form-group text-center">
-    <button class="btn btn-success" type="submit">Calculate</button>
-    <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
-  </div>
+    <button class="btn btn-success" type="button" (click)="calculate()">Calculate</button>
+    </div>
   
 </form>
