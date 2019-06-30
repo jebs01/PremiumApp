@@ -29,7 +29,7 @@ namespace PremiumApp.API.Data
           
         public double Calculate(UserForCalculationDto userForCalculationDto)
         {  
-           
+           try{
                 double iRiskFactor;
                 double iSumInsured;
 
@@ -96,6 +96,12 @@ namespace PremiumApp.API.Data
 
                   // Calculate and return Premium  value   
                   return  (iSumInsured * iRiskFactor * iAge) / 1000 * 12;;
+           }
+           catch (Exception ex){
+               string sException = ex.Message;
+               return 0;
+           }
+          
                     
         }
 
