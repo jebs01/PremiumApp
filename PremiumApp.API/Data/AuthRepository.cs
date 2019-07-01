@@ -5,20 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using PremiumApp.API.Data;
 using PremiumApp.API.Dtos;
 
+
 namespace PremiumApp.API.Data
 {
 
     // Set OccupationRating to avoid any issues with magic strings
     // and to help clean code and maintainence
 
-    public static class OccupationRating
-    {
-            public const double NotSet = 0;
-            public const double Professional = 1.0;
-            public const double WhiteCollar = 1.25;
-             public const double LightManual = 1.5;
-            public const double HeavyManual = 1.75;
-    }
+   
+
+   
     public class AuthRepository :IAuthRepository
     {
         private readonly DataContext _context;
@@ -32,6 +28,7 @@ namespace PremiumApp.API.Data
            try{
                 double iRiskFactor;
                 double iSumInsured;
+                PremiumCalculator userPremium;
 
            
                 DateTime dtDOB = Convert.ToDateTime(userForCalculationDto.DateofBirth);
@@ -91,11 +88,20 @@ namespace PremiumApp.API.Data
                        break;
                    }
 
-
-                  
+                    if (iSumInsured > 0 && iRiskFactor >0 && iAge >0)
+                    {
+                         userPremium = new PremiumCalculator();
+                         userPremium.iPremiumSumInsured = iSumInsured;
+                         userPremium.iPremiumRiskFactor = iRiskFactor;
+                         userPremium.iPremiumAge = iAge;
+                         return userPremium.CalculatePremium();
+                    }
+                    
+                    else 
+                    return 0;
 
                   // Calculate and return Premium  value   
-                  return  (iSumInsured * iRiskFactor * iAge) / 1000 * 12;;
+                //  return  (iSumInsured * iRiskFactor * iAge) / 1000 * 12;;
            }
            catch (Exception ex){
                string sException = ex.Message;
